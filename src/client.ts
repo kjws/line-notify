@@ -1,12 +1,11 @@
 import fetch from 'node-fetch';
 import * as FormData from 'form-data';
 
-export interface LineNotifyClientParams {
+export type LineNotifyClientParams = {
   client_id: string;
   client_secret: string;
   redirect_uri?: string;
-  access_token?: string;
-}
+};
 
 export type GetTokenResponse = { access_token: string };
 
@@ -29,20 +28,18 @@ export class LineNotifyClient {
   private client_id: string;
   private client_secret: string;
   private redirect_uri: string;
-  private access_token: string;
 
   OAUTH_API_BASE = LineNotifyClient.OAUTH_API_BASE;
   API_BASE = LineNotifyClient.API_BASE;
 
   constructor(params: LineNotifyClientParams) {
-    const { client_id, client_secret, redirect_uri, access_token } = params;
+    const { client_id, client_secret, redirect_uri } = params;
     this.client_id = client_id;
     this.client_secret = client_secret;
     this.redirect_uri = redirect_uri;
-    this.access_token = access_token;
   }
 
-  getToken(code: string, redirect_uri?: string) {
+  getToken(code: string, redirect_uri?: string): Promise<GetTokenResponse> {
     const API_URL = this.OAUTH_API_BASE + '/oauth/token';
     const form = new FormData();
 
@@ -52,15 +49,10 @@ export class LineNotifyClient {
     form.append('client_id', this.client_id);
     form.append('client_secret', this.client_secret);
 
-    return fetch(API_URL, { method: 'POST', body: form })
-      .then(res => res.json())
-      .then((res: GetTokenResponse) => {
-        if (res.access_token) { this.access_token = res.access_token; }
-        return res;
-      });
+    return fetch(API_URL, { method: 'POST', body: form }).then(res => res.json());
   }
 
-  notify(message: string): Promise<NotifyResponse> {
+  notify(access_token: string, message: string): Promise<NotifyResponse> {
     const API_URL = this.API_BASE + '/api/notify';
     const form = new FormData();
 
@@ -68,28 +60,25 @@ export class LineNotifyClient {
 
     return fetch(API_URL, {
       method: 'POST',
-      headers: { Authorization: 'Bearer ' + this.access_token },
+      headers: { Authorization: 'Bearer ' + access_token },
       body: form
-    })
-      .then(res => res.json());
+    }).then(res => res.json());
   }
 
-  getStatus(access_token?: string): Promise<GetStatusResponse> {
+  getStatus(access_token: string): Promise<GetStatusResponse> {
     const API_URL = this.API_BASE + '/api/status';
 
     return fetch(API_URL, {
-      headers: { Authorization: 'Bearer ' + (access_token || this.access_token) }
-    })
-      .then(res => res.json());
+      headers: { Authorization: 'Bearer ' + access_token }
+    }).then(res => res.json());
   }
 
-  revoke(access_token?: string): Promise<RevokeResponse> {
+  revoke(access_token: string): Promise<RevokeResponse> {
     const API_URL = this.API_BASE + '/api/revoke';
 
     return fetch(API_URL, {
       method: 'POST',
-      headers: { Authorization: 'Bearer ' + (access_token || this.access_token) }
-    })
-      .then(res => res.json());
+      headers: { Authorization: 'Bearer ' + access_token }
+    }).then(res => res.json());
   }
 }
