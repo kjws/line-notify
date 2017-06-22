@@ -9,6 +9,14 @@ export type LineNotifyClientParams = {
 
 export type GetTokenResponse = { access_token: string };
 
+export interface NotifyOptionalParams {
+  imageThumbnail?: string;
+  imageFullsize?: string;
+  imageFile?: any;
+  stickerPackageId?: number;
+  stickerId?: number;
+}
+
 export type NotifyResponse = {
   status: number;
   message: string;
@@ -52,11 +60,20 @@ export class LineNotifyClient {
     return fetch(API_URL, { method: 'POST', body: form }).then(res => res.json());
   }
 
-  notify(access_token: string, message: string): Promise<NotifyResponse> {
+  notify(access_token: string, message: string, params?: NotifyOptionalParams): Promise<NotifyResponse> {
     const API_URL = this.API_BASE + '/api/notify';
     const form = new FormData();
 
     form.append('message', message);
+
+    const {
+      imageThumbnail, imageFullsize, imageFile, stickerPackageId, stickerId
+    } = params || {} as NotifyOptionalParams;
+    if (imageThumbnail) { form.append('imageThumbnail', imageThumbnail); }
+    if (imageFullsize) { form.append('imageFullsize', imageFullsize); }
+    if (imageFile) { form.append('imageFile', imageFile); }
+    if (stickerPackageId) { form.append('stickerPackageId', stickerPackageId); }
+    if (stickerId) { form.append('stickerId', stickerId); }
 
     return fetch(API_URL, {
       method: 'POST',
