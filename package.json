@@ -1,0 +1,19 @@
+{
+  "name": "line-notify",
+  "version": "0.1.0",
+  "description": "Node.js SDK for the LINE Notify API",
+  "main": "index.js",
+  "scripts": {
+    "lint": "tslint --project ./tslint.json --exclude **/node_modules/**/* && echo PASS || echo WARNING",
+    "build": "npm run lint && rimraf dist && tsc",
+    "install": "npm run build"
+  },
+  "author": "OUcare",
+  "dependencies": {
+    "@types/form-data": "0.0.33",
+    "@types/node": "^7.0.5",
+    "@types/node-fetch": "^1.6.7",
+    "form-data": "^2.2.0",
+    "node-fetch": "^1.7.1"
+  }
+}

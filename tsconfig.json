@@ -1,0 +1,31 @@
+{
+  "compilerOptions": {
+    "declaration": false,
+    "module": "commonjs",
+    "target": "es6",
+    "emitDecoratorMetadata": true,
+    "experimentalDecorators": true,
+    "moduleResolution": "node",
+    "noImplicitAny": false,
+    "noLib": false,
+    "outDir": "./dist",
+    "preserveConstEnums": true,
+    "removeComments": true,
+    "rootDir": "./src",
+    "noFallthroughCasesInSwitch": true,
+    "allowUnreachableCode": false,
+    "noImplicitUseStrict": false,
+    "sourceMap": true
+  },
+  "exclude": [
+    "node_modules"
+  ],
+  "compileOnSave": true,
+  "buildOnSave": false,
+  "formatCodeOptions": {
+    "indentSize": 2
+  },
+  "atom": {
+    "rewriteTsconfig": false
+  }
+}
