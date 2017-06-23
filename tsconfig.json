@@ -16,7 +16,7 @@
   },
   "exclude": [
     "node_modules",
-    "index.ts"
+    "index.d.ts"
   ],
   "compileOnSave": true,
   "formatCodeOptions": {
