@@ -7,7 +7,14 @@ export type LineNotifyClientParams = {
   redirect_uri?: string;
 };
 
-export type GetTokenResponse = { access_token: string };
+export type GenericResponse = {
+  status: number;
+  message: string;
+};
+
+export interface GetTokenResponse extends GenericResponse {
+  access_token: string;
+}
 
 export interface NotifyOptionalParams {
   imageThumbnail?: string;
@@ -17,17 +24,14 @@ export interface NotifyOptionalParams {
   stickerId?: number;
 }
 
-export type NotifyResponse = {
-  status: number;
-  message: string;
-};
+export type NotifyResponse = GenericResponse;
 
-export interface GetStatusResponse extends NotifyResponse {
+export interface GetStatusResponse extends GenericResponse {
   targetType: 'USER' | 'GROUP';
   target: string | 'null';
 }
 
-export type RevokeResponse = NotifyResponse;
+export type RevokeResponse = GenericResponse;
 
 export class LineNotifyClient {
   static OAUTH_API_BASE = 'https://notify-bot.line.me';
