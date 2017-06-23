@@ -15,7 +15,8 @@
     "target": "es2015"
   },
   "exclude": [
-    "node_modules"
+    "node_modules",
+    "index.ts"
   ],
   "compileOnSave": true,
   "formatCodeOptions": {
