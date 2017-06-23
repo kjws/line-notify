@@ -1,31 +1,24 @@
 {
   "compilerOptions": {
-    "declaration": false,
+    "declaration": true,
+    "lib": ["es2015"],
     "module": "commonjs",
-    "target": "es6",
-    "emitDecoratorMetadata": true,
-    "experimentalDecorators": true,
     "moduleResolution": "node",
+    "noFallthroughCasesInSwitch": true,
     "noImplicitAny": false,
-    "noLib": false,
     "outDir": "./dist",
     "preserveConstEnums": true,
+    "pretty": true,
     "removeComments": true,
     "rootDir": "./src",
-    "noFallthroughCasesInSwitch": true,
-    "allowUnreachableCode": false,
-    "noImplicitUseStrict": false,
-    "sourceMap": true
+    "sourceMap": true,
+    "target": "es2015"
   },
   "exclude": [
     "node_modules"
   ],
   "compileOnSave": true,
-  "buildOnSave": false,
   "formatCodeOptions": {
     "indentSize": 2
-  },
-  "atom": {
-    "rewriteTsconfig": false
   }
 }
